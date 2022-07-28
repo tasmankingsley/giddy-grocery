@@ -1,1 +1,0 @@
-Ajax content has been loaded successfully
