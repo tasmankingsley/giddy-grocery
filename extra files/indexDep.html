@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="bluestyles.css">
+</head>
+<body>
+  <header class="MainHeader"></header>
+  <main>
+
+    <!--Left frame-->
+    <div class="div1style">
+      <h2>Browse Catalogue</h2>
+      <img id="img0" class="img" src="images/image0.png" usemap="#map0">
+      <img id="placeholder" class="img" src="" usemap="">
+    </div>
+
+    <!--Right frame-->
+    <div class="div2style">
+
+      <!--Pop up checkout form-->
+      <div class="form-popout" id="form-div">
+        <h2 style="color: white;">Checkout</h2>
+
+        <!--Checkout item table-->
+        <div style="height: 205px; overflow-y: scroll;">
+          <table id="CheckoutTableBody">
+            <tr id="CheckoutTable" class="CheckoutTable">
+              <th class="Product">Product Name</th>
+              <th class="UPAMTP">Price</th>
+              <th class="UPAMTP">Amount</th>
+              <th class="UPAMTP">Total</th>
+            </tr>
+          </table>
+        </div>
+
+        <!--Checkout total table-->
+        <table style="width: 45%; margin-left: 50%;" class="CheckoutTable">
+          <tr>
+            <th>Total Price</th>
+            <th>No. Items</th>
+          </tr>
+          <tr>
+            <td id="TotalCheck"></td>
+            <td id="ItemsCheck"></td>
+          </tr>
+        </table>
+        <br>
+
+        <!--Checkout form-->
+          <form action="" class="form">
+            <h3>Delivery Details</h3>
+            <Table class="FormTable">
+              <tr>
+                <td class="tdName"><b><span style="color:red">*</span>Name:</b></td>
+                <td class="tdInput"><input type="text" name="name" id="name" value=""></td>
+              </tr>
+              <tr>
+                <td class="tdName"><b><span style="color:red">*</span>Address:</b></td>
+                <td class="tdInput"><input type="text" name="address" id="address" value=""></td>
+              </tr>
+              <tr>
+                <td class="tdName"><b><span style="color:red">*</span>Suburb:</b></td>
+                <td class="tdInput"><input type="text" name="suburb" id="suburb" value=""></td>
+              </tr>
+              <tr>
+                <td class="tdName"><b><span style="color:red">*</span>State:</b></td>
+                <td class="tdInput"><input type="text" name="state" id="state" value=""></td>
+              </tr>
+              <tr>
+                <td class="tdName"><b><span style="color:red">*</span>Country:</b></td>
+                <td class="tdInput"><input type="text" name="country" id="country" value=""></td>
+              </tr>
+              <tr>
+                <td class="tdName"><b><span style="color:red">*</span>Email:</b></td>
+                <td class="tdInput"><input type="email" pattern=".+@example.com" required name="email" id="email" value=""></td>
+              </tr>
+            </Table>
+          </form>
+
+        <!--Error message-->
+        <p id="error-text" style="background-color: white; color: black; width: 50%; margin: auto;"></p>
+
+        <!--Checkout buttons-->
+        <div class="CheckDiv" style="margin-bottom: 71px;">
+          <button type="button" class="CheckoutButtons" id="CloseButton" onclick="closeForm()">Close</button>
+          <button type="button" class="CheckoutButtons" id="PurchaseButton" onclick="validateForm()">Purchase</button>
+        </div>
+
+      </div>
+
+      <!--Thank you popout window-->
+      <div class="form-popout" id="thankyou">
+        <h2 id="thankyou-text" style="color: white; margin-top: 30px;"></h2>
+        <br>
+        <button type="button" class="CheckoutButtons" id="closeThankYou" onclick="closeThankYou()">Continue shopping</button>
+      </div>
+
+      <!--Top right frame-->
+      <div class="div3style">
+        <header class="SubHeader">
+          <h2>Product Details</h2>
+        </header><br>
+          <!--Adds details here-->
+          <p id="TopFrame" style="height: 77px;"></p><br>
+
+        <!--Add to cart button-->
+        <div class="CartButtons" style="float: right; margin-top: 20px;">
+          <button type="button" class="button" id="AddItem" value="" OnClick="addToCart(this.value);">Add to cart</button>
+        </div>
+      </div>
+
+      <!--Bottom right frame-->
+      <div class="div4style">
+        <header class="SubHeader">
+          <h2>Shopping Cart</h2>
+        </header><br>
+
+        <!--Shopping cart item table-->
+        <div style="height: 180px; overflow-y: scroll;">
+          <table id="CartTable">
+            <tr id="CartProduct">
+              <th class="Product">Product Name</th>
+              <th class="UPAMTP">Price</th>
+              <th class="UPAMTP">Amount</th>
+              <th class="UPAMTP">Total</th>
+            </tr>
+          </table>
+          <!--Add to cart php table goes here-->
+          <table id="phpTable"></table>
+        </div>
+
+        <!--Error message-->
+        <p id="CartEmpty" style="background-color: white; width: 65%; margin: auto;"></p>
+        <br>
+
+        <!--Total cart table-->
+        <table style="width: 45%; margin-left: 50%;">
+          <tr>
+            <th>Total Price</th>
+            <th>No. Items</th>
+          </tr>
+          <tr>
+            <td id="Total"></td>
+            <td id="ItemsCart"></td>
+          </tr>
+        </table>
+        <br>
+
+        <!--Shopping cart buttons-->
+        <div class="CartButtons">
+          <button type="button" class="button" id="ClearCart" onclick="clearTotal()">Clear cart</button>
+          <button type="button" class="button" id="Checkout" onclick="checkCart()">Checkout</button>
+        </div>
+        <br>
+      </div>
+    </div>
+  </main>
+
+  <!--Image maps-->
+  <map name="map0" id="map0">
+    <area id="Categories" title="Categories" coords="273,32,390,91" shape="rect">
+    <area id="FrozenFood" title="Frozen Food" coords="7,195,124,254" shape="rect" href="javascript:void(0)">
+    <area id="FreshFood" title="Fresh Food" coords="141,195,258,254" shape="rect" href="javascript:void(0)">
+    <area id="Beverages" title="Beverages" coords="273,196,390,254" shape="rect" href="javascript:void(0)">
+    <area id="HomeHealth" title="Home Health" coords="408,196,525,253" shape="rect" href="javascript:void(0)">
+    <area id="PetFood" title="Pet Food" coords="541,196,659,253" shape="rect" href="javascript:void(0)">
+  </map>
+
+  <map name="map1">
+    <area title="Hamburger Patties" onclick="loadTopFrame(this.id)" id="1002" coords="8,185,125,243" shape="rect" href="javascript:void(0)">
+    <area title="Fish Fingers" coords="139,185,257,244" shape="rect">
+    <area title="Shelled Prawns" onclick="loadTopFrame(this.id)" id="1003" coords="275,185,391,243" shape="rect" href="javascript:void(0)">
+    <area title="Tub Ice Cream" coords="409,185,525,244" shape="rect">
+    <area title="500 Gram" onclick="loadTopFrame(this.id)" id="1000" coords="84,348,202,407" shape="rect" href="javascript:void(0)">
+    <area title="1000 Gram" onclick="loadTopFrame(this.id)" id="1001" coords="216,348,333,407" shape="rect" href="javascript:void(0)">
+    <area title="1 Litre" onclick="loadTopFrame(this.id)" id="1004" coords="356,348,473,407" shape="rect" href="javascript:void(0)">
+    <area title="2 Litre" onclick="loadTopFrame(this.id)" id="1005" coords="488,348,604,407" shape="rect" href="javascript:void(0)">
+  </map>
+
+  <map name="map2">
+    <area title="T-bone steak" onclick="loadTopFrame(this.id)" id="3002" coords="7,181,97,240" shape="rect" href="javascript:void(0)">
+    <area title="Cheddar Cheese" coords="103,181,194,240" shape="rect">
+    <area title="Navel Oranges" onclick="loadTopFrame(this.id)" id="3003" coords="199,182,290,240" shape="rect" href="javascript:void(0)">
+    <area title="Bananas" onclick="loadTopFrame(this.id)" id="3004" coords="299,182,389,239" shape="rect" href="javascript:void(0)">
+    <area title="Grapes" onclick="loadTopFrame(this.id)" id="3006" coords="394,181,485,240" shape="rect" href="javascript:void(0)">
+    <area title="Apples" onclick="loadTopFrame(this.id)" id="3007" coords="493,182,583,241" shape="rect" href="javascript:void(0)">
+    <area title="Peaches" onclick="loadTopFrame(this.id)" id="3005" coords="590,181,680,241" shape="rect" href="javascript:void(0)">
+    <area title="500 Gram" onclick="loadTopFrame(this.id)" id="3000" coords="47,349,164,407" shape="rect" href="javascript:void(0)">
+    <area title="1000 Gram" onclick="loadTopFrame(this.id)" id="3001" coords="179,349,295,408" shape="rect" href="javascript:void(0)">
+  </map>
+
+  <map name="map3">
+    <area title="Coffee" coords="63,190,181,250" shape="rect">
+    <area title="Earl Grey" coords="314,190,431,250" shape="rect">
+    <area title="Chocolate" onclick="loadTopFrame(this.id)" id="4005" coords="551,190,668,249" shape="rect" href="javascript:void(0)">
+    <area title="200 gram" onclick="loadTopFrame(this.id)" id="4003" coords="28,341,119,398" shape="rect" href="javascript:void(0)">
+    <area title="500 gram" onclick="loadTopFrame(this.id)" id="4004" coords="126,341,216,399" shape="rect" href="javascript:void(0)">
+    <area title="Pack 25" onclick="loadTopFrame(this.id)" id="4000" coords="223,341,314,399" shape="rect" href="javascript:void(0)">
+    <area title="Pack 100" onclick="loadTopFrame(this.id)" id="4001" coords="321,341,411,399" shape="rect" href="javascript:void(0)">
+    <area title="Pack 200" onclick="loadTopFrame(this.id)" id="4002" coords="419,341,510,398" shape="rect" href="javascript:void(0)">
+  </map>
+
+  <map name="map4">
+    <area title="Bath Soap" onclick="loadTopFrame(this.id)" id="2002" coords="8,182,125,241" shape="rect" href="javascript:void(0)">
+    <area title="Panadol" coords="145,182,262,240" shape="rect">
+    <area title="Washing Powder" onclick="loadTopFrame(this.id)" id="2005" coords="275,182,392,240" shape="rect" href="javascript:void(0)">
+    <area title="Garbage Bags" coords="411,181,527,240" shape="rect">
+    <area title="Laundry Bleach" onclick="loadTopFrame(this.id)" id="2006" coords="545,182,661,241" shape="rect" href="javascript:void(0)">
+    <area title="Pack 24" onclick="loadTopFrame(this.id)" id="2000" coords="87,347,203,406" shape="rect" href="javascript:void(0)">
+    <area title="Bottle 50" onclick="loadTopFrame(this.id)" id="2001" coords="216,347,334,406" shape="rect" href="javascript:void(0)">
+    <area title="small" onclick="loadTopFrame(this.id)" id="2003" coords="357,347,473,405" shape="rect" href="javascript:void(0)">
+    <area title="large" onclick="loadTopFrame(this.id)" id="2004" coords="487,347,603,406" shape="rect" href="javascript:void(0)">
+  </map>
+
+  <map name="map5">
+    <area title="Bird Food" onclick="loadTopFrame(this.id)" id="5002" coords="143,182,260,240" shape="rect" href="javascript:void(0)">
+    <area title="Cat Food" onclick="loadTopFrame(this.id)" id="5003" coords="276,182,394,241" shape="rect" href="javascript:void(0)">
+    <area title="Dog Food" coords="409,182,526,240" shape="rect">
+    <area title="Fish Food" onclick="loadTopFrame(this.id)" id="5004" coords="546,182,663,240" shape="rect" href="javascript:void(0)">
+    <area title="1kg Pack" onclick="loadTopFrame(this.id)" id="5001" coords="351,347,468,404" shape="rect" href="javascript:void(0)">
+    <area title="5kg Pack" onclick="loadTopFrame(this.id)" id="5000" coords="488,347,605,406" shape="rect" href="javascript:void(0)">
+  </map>
+
+
+  <script type="text/javascript">
+    // Funtion to change placeholder image source dependant on id
+    function showPic(area) {
+      const subCat = area.getAttribute('id');
+      const placeholder = document.getElementById('placeholder');
+      const catImg = document.getElementById('img0');
+      if (subCat === 'FrozenFood') {
+        placeholder.src = 'images/image1.png';
+        catImg.src = 'images/image0_1.png';
+        document.getElementById('placeholder').useMap = '#map1';
+      } else if (subCat === 'FreshFood') {
+        placeholder.src = 'images/image2.png';
+        catImg.src = 'images/image0_2.png';
+        document.getElementById('placeholder').useMap = '#map2';
+      } else if (subCat === 'Beverages') {
+        placeholder.src = 'images/image3.png';
+        catImg.src = 'images/image0_3.png';
+        document.getElementById('placeholder').useMap = '#map3';
+      } else if (subCat === 'HomeHealth') {
+        placeholder.src = 'images/image4.png';
+        catImg.src = 'images/image0_4.png';
+        document.getElementById('placeholder').useMap = '#map4';
+      } else if (subCat === 'PetFood') {
+        placeholder.src = 'images/image5.png';
+        catImg.src = 'images/image0_5.png';
+        document.getElementById('placeholder').useMap = '#map5';
+      }
+    }
+
+    // Passes through correct id with mouseover event for the categories
+    const frozenFood = document.getElementById('FrozenFood');
+    frozenFood.addEventListener('mouseover', () => {
+      showPic(frozenFood);
+    });
+
+    const freshFood = document.getElementById('FreshFood');
+    freshFood.addEventListener('mouseover', () => {
+      showPic(freshFood);
+    });
+
+    const beverages = document.getElementById('Beverages');
+    beverages.addEventListener('mouseover', () => {
+      showPic(beverages);
+    });
+
+    const homeHealth = document.getElementById('HomeHealth');
+    homeHealth.addEventListener('mouseover', () => {
+      showPic(homeHealth);
+    });
+
+    const petFood = document.getElementById('PetFood');
+    petFood.addEventListener('mouseover', () => {
+      showPic(petFood);
+    });
+
+    // Loads content from database to top table via php script using AJAX
+    function loadTopFrame(str) {
+      const xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function firstRequest() {
+        if (this.readyState === 4 && this.status === 200) {
+          document.getElementById('TopFrame').innerHTML = this.responseText;
+        }
+      };
+
+      xhttp.open('GET', `loadDetails.php?q=${str}`, true);
+      xhttp.send();
+
+      // Make the add to cart button have the items id as its value
+      document.getElementById('AddItem').value = str;
+    }
+
+    // JQuery calculate total in shopping cart
+    function calculateTotal() {
+      $(document).ready(() => {
+        let num = 0;
+        $('.CartPrice').each(function getFloat() {
+          num += parseFloat($(this).text());
+        });
+        const totalValue = num.toFixed(2);
+        document.getElementById('Total').innerHTML = `$${totalValue}`;
+        document.getElementById('TotalCheck').innerHTML = `$${totalValue}`;
+      });
+    }
+
+    // Gets the number of rows in the item tables and displays No. of items
+    function numberItems() {
+      let amount = 0;
+      $('.CartAmount').each(function sumAmount() {
+        amount += parseFloat($(this).text()); // Or this.innerHTML, this.innerText
+      });
+      $('#ItemsCart').html(amount);
+      $('#ItemsCheck').html(amount);
+    }
+/*
+    function copyTable() {
+      const source = document.getElementById('this');
+      const destination = document.getElementById('checkoutPhpTable');
+      const copy = source.cloneNode(true);
+      // copy.setAttribute('id', 'tableA');
+      destination.parentNode.replaceChild(copy, destination);
+    }
+*/
+    // TODO: change ids to class so i can copy table to checkoout form
+    // Add items to cart bottom frame AJAX
+    function addToCart(str) {
+      const xhttp = new XMLHttpRequest();
+      const uniqueRowID = `ID${str}`;
+      const amountCellID = `AM${str}`;
+      const priceID = `UP${str}`;
+      const totalID = `TP${str}`;
+
+      // Get the amount selected from details table
+      let amountCellIDSum = parseFloat(document.getElementById('amountVal').value);
+
+      if (amountCellIDSum >= 1 && amountCellIDSum <= 20) {
+        // Second request AJAX function
+        xhttp.onreadystatechange = function secondRequest() {
+          if (this.readyState === 4 && this.status === 200) {
+            const added = this.responseText;
+
+            // If ID element (item row in cart) is present, update values
+            // Else add a new item row and update values
+            if ($(`#${uniqueRowID}`).length > 0) {
+              // Gets the number amount already inside the item row
+              const amount = parseFloat(document.getElementById(`${amountCellID}`).innerHTML);
+              // Adds with the amount selected by user, and updates value
+              amountCellIDSum += amount;
+              document.getElementById(`${amountCellID}`).innerHTML = amountCellIDSum;
+
+              const price = parseFloat(document.getElementById(`${totalID}`).innerHTML);
+              const totalCellPrice = (price / amount) * amountCellIDSum;
+              document.getElementById(`${totalID}`).innerHTML = totalCellPrice.toFixed(2);
+            } else {
+              // Inserts new item row and updates values
+              document.getElementById('phpTable').insertAdjacentHTML('afterbegin', added);
+              document.getElementById(`${amountCellID}`).innerHTML = amountCellIDSum;
+
+              const price = parseFloat(document.getElementById(`${totalID}`).innerHTML);
+              const totalCellPrice = price * amountCellIDSum;
+              document.getElementById(`${totalID}`).innerHTML = totalCellPrice.toFixed(2);
+            }
+
+            calculateTotal();
+            numberItems();
+            // copyTable(uniqueRowID);
+
+            // Clears the cart empty message
+            document.getElementById('CartEmpty').innerHTML = '';
+          }
+        };
+        xhttp.open('GET', `loadCart.php?q=${str}`, true);
+        xhttp.send();
+      } else {
+        alert('Please enter a value between 1 and 20');
+      }
+    }
+
+    // JQuery to clear the cart rows on Clear Cart button click
+    $('#ClearCart').click(() => {
+      $('.CartRow').remove();
+    });
+/*
+    function clearSession() {
+      document.location = 'http://localhost/server/clearSession.php';
+    }
+
+    document.getElementById('ClearCart').addEventListener('click', clearSession());
+*/
+
+    // Clear cart price total
+    function clearTotal() {
+      document.getElementById('Total').innerHTML = '';
+      document.getElementById('TotalCheck').innerHTML = '';
+      $('#ItemsCart').html('');
+      $('#ItemsCheck').html('');
+    }
+
+    // Open and close Checkout form
+    function openForm() {
+      document.getElementById('form-div').style.display = 'flex';
+      $('#phpTable').insertAfter('#CheckoutTableBody');
+    }
+    // Close function, no window display by default. Clears error messages on close
+    function closeForm() {
+      document.getElementById('form-div').style.display = 'none';
+      document.getElementById('error-text').innerHTML = '';
+      $('#phpTable').insertAfter('#CartTable');
+    }
+
+    // Check if there are any items in the cart
+    function checkCart() {
+      const cartRows = document.getElementById('phpTable').rows.length;
+      if (cartRows < 1) {
+        document.getElementById('CartEmpty').innerHTML = '* Please add items to your cart before checkout.';
+      } else {
+        openForm();
+      }
+    }
+
+    // Close the thank you div
+    function closeThankYou() {
+      document.getElementById('thankyou').style.display = 'none';
+      document.getElementById('form-div').style.display = 'none';
+      document.getElementById('error-text').innerHTML = '';
+    }
+
+    // Validates form, returns error message if missing info
+    function validateForm() {
+      if (document.getElementById('name').value === '') {
+        document.getElementById('error-text').innerHTML = '* Please enter your Name';
+        document.getElementById('thankyou').style.display = 'none';
+        return false;
+      }
+      if (document.getElementById('address').value === '') {
+        document.getElementById('error-text').innerHTML = '* Please enter your Address';
+        document.getElementById('thankyou').style.display = 'none';
+        return false;
+      }
+      if (document.getElementById('suburb').value === '') {
+        document.getElementById('error-text').innerHTML = '* Please enter your Suburb';
+        document.getElementById('thankyou').style.display = 'none';
+        return false;
+      }
+      if (document.getElementById('state').value === '') {
+        document.getElementById('error-text').innerHTML = '* Please enter your State';
+        document.getElementById('thankyou').style.display = 'none';
+        return false;
+      }
+      if (document.getElementById('country').value === '') {
+        document.getElementById('error-text').innerHTML = '* Please enter your Country';
+        document.getElementById('thankyou').style.display = 'none';
+        return false;
+      }
+
+      function emailIsValid(emailStr) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailStr);
+      }
+
+      if (emailIsValid(document.getElementById('email').value) === false) {
+        document.getElementById('error-text').innerHTML = '* Please enter a valid Email (username@mailserver.domain)';
+        document.getElementById('thankyou').style.display = 'none';
+        return false;
+      }
+      document.getElementById('error-text').innerHTML = '';
+
+      // Gets the customers name from the form and displays a thank you message in a new window
+      const name = document.getElementById('name').value;
+      document.getElementById('thankyou-text').innerHTML = `${name},<br>thank you for your purchase!`;
+      document.getElementById('thankyou').style.display = 'block';
+      return true;
+    }
+  </script>
+</body>
+</html>
+<!--
+__Attributions_____
+
+Photo credits to:
+Jess Bailey on Unsplash https://unsplash.com/photos/0uns8eQn_g8
+Debby Hudson on Unsplash https://unsplash.com/photos/lJONenH-1B8
+Felipe Paes on Pexels https://www.pexels.com/photo/photo-of-push-cart-against-yellow-background-3728311/
+Deon Black on Unsplash https://unsplash.com/photos/2evdP8ysNoU
+All photos are deemed free for use. Some photos have been modified.
+
+Icon credits to:
+Hamburger by The Icon Z
+Icecream for one by Becca O’Shea
+Add to Cart by Christopher Holm-Hansen
+prawn by Eucalyp
+T-bone by parkjisun
+Bananas by Kick
+orange by Xinh Studio
+Fried Fish by MD RIDUWAN MOLLA
+panadol by Made by Made
+soap by Jo Santos
+Waste by Akash
+washing powder by ArmOkay
+bleaching by The Icon Z
+Cheese by ProSymbols
+peach by Vectorstall
+grapes by Adrien Coquet
+Apple by Dharmendra roy AJ
+coffee bag by RROOK
+chocolate bar by parkjisun
+dog food by arif fajar yulianto
+Cat Food by Crystal Gordon
+Bird Food by ronin design
+fish food by Millenials
+All from thenounproject.com
+-->

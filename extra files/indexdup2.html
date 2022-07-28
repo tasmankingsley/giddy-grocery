@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="bluestyles.css">
+</head>
+<body>
+  <header class="MainHeader"></header>
+  <main>
+
+    <!--Left frame-->
+    <div class="div1style">
+      <h2>Browse Catalogue</h2>
+      <img id="img0" class="img" src="images/image0.png" usemap="#map0">
+      <img id="placeholder" class="img" src="" usemap="">
+    </div>
+
+    <!--Right frame-->
+    <div class="div2style">
+
+      <!--Pop up checkout form-->
+      <div class="form-popout" id="form-div">
+        <h2 style="color: white;">Checkout</h2>
+
+        <!--Checkout item table-->
+        <div style="height: 205px; overflow-y: scroll;">
+          <table>
+            <tr id="CheckoutTable" class="CheckoutTable">
+              <th>Product</th>
+              <th>Price</th>
+            </tr>
+          </table>
+        </div>
+
+        <!--Checkout total table-->
+        <table style="width: 45%; margin-left: 50%;" class="CheckoutTable">
+          <tr>
+            <th>Total Price</th>
+            <th>No. Items</th>
+          </tr>
+          <tr>
+            <td id="TotalCheck"></td>
+            <td id="ItemsCheck"></td>
+          </tr>
+        </table>
+        <br>
+
+        <!--Checkout form-->
+          <form action="" class="form">
+            <h3>Delivery Details</h3>
+            <Table class="FormTable">
+              <tr>
+                <td><b>Name:</b></td>
+                <td><input type="text" name="name" id="name" value=""></td>
+              </tr>
+              <tr>
+                <td><b>Address:</b></td>
+                <td><input type="text" name="address" id="address" value=""></td>
+              </tr>
+              <tr>
+                <td><b>Suburb:</b></td>
+                <td><input type="text" name="suburb" id="suburb" value=""></td>
+              </tr>
+              <tr>
+                <td><b>State:</b></td>
+                <td><input type="text" name="state" id="state" value=""></td>
+              </tr>
+              <tr>
+                <td><b>Country:</b></td>
+                <td><input type="text" name="country" id="country" value=""></td>
+              </tr>
+              <tr>
+                <td><b>Email:</b></td>
+                <td><input type="text" name="email" id="email" value=""></td>
+              </tr>
+            </Table>
+          </form>
+
+        <!--Error message-->
+        <p id="error-text" style="background-color: white; color: black; width: 50%; margin: auto;"></p>
+
+        <!--Checkout buttons-->
+        <div class="CheckDiv" style="margin-bottom: 71px;">
+          <button type="button" class="CheckoutButtons" id="CloseButton" onclick="closeForm()">Close</button>
+          <button type="button" class="CheckoutButtons" id="PurchaseButton" onclick="validateForm()">Purchase</button>
+        </div>
+
+      </div>
+
+      <!--Thank you popout window-->
+      <div class="form-popout" id="thankyou">
+        <h2 id="thankyou-text" style="color: white; margin-top: 30px;"></h2>
+        <br>
+        <button type="button" class="CheckoutButtons" id="closeThankYou" onclick="closeThankYou()">Continue shopping</button>
+      </div>
+
+      <!--Top right frame-->
+      <div class="div3style">
+        <header class="SubHeader">
+          <h2>Product Details</h2>
+        </header><br>
+        <!--Adds details here-->
+        <p id="TopFrame" style="height: 77px;"></p><br>
+
+        <!--Add to cart button-->
+        <div class="CartButtons">
+          <button type="button" class="button" id="AddItem" value="" OnClick="addToCart(this.value);">Add to cart</button>
+        </div>
+      </div>
+
+      <!--Bottom right frame-->
+      <div class="div4style">
+        <header class="SubHeader">
+          <h2>Shopping Cart</h2>
+        </header><br>
+
+        <!--Shopping cart item table-->
+        <div style="height: 180px; overflow-y: scroll;">
+          <table id="CartTable">
+            <tr id="CartProduct">
+              <th>Product</th>
+              <th>Price</th>
+              <th>Amount</th>
+            </tr>
+          </table>
+        </div>
+
+        <!--Error message-->
+        <p id="CartEmpty" style="background-color: white; width: 65%; margin: auto;"></p>
+        <br>
+
+        <!--Total cart table-->
+        <table style="width: 45%; margin-left: 50%;">
+          <tr>
+            <th>Total Price</th>
+            <th>No. Items</th>
+          </tr>
+          <tr>
+            <td id="Total"></td>
+            <td id="ItemsCart"></td>
+          </tr>
+        </table>
+        <br>
+
+        <!--Shopping cart buttons-->
+        <div class="CartButtons">
+          <button type="button" class="button" id="ClearCart" onclick="clearTotal()">Clear cart</button>
+          <button type="button" class="button" id="Checkout" onclick="checkCart()">Checkout</button>
+        </div>
+        <br>
+      </div>
+    </div>
+  </main>
+
+  <!--Image maps-->
+  <map name="map0" id="map0">
+    <area id="Categories" title="Categories" href="" coords="273,32,390,91" shape="rect">
+    <area id="FrozenFood" title="Frozen Food" coords="7,195,124,254" shape="rect">
+    <area id="FreshFood" title="Fresh Food" coords="141,195,258,254" shape="rect">
+    <area id="Beverages" title="Beverages" coords="273,196,390,254" shape="rect">
+    <area id="HomeHealth" title="Home Health" coords="408,196,525,253" shape="rect">
+    <area id="PetFood" title="Pet Food" coords="541,196,659,253" shape="rect">
+  </map>
+
+  <map name="map1">
+    <area title="Hamburger Patties" onclick="loadTopFrame(this.id)" id="1002" coords="8,185,125,243" shape="rect">
+    <area title="Fish Fingers" coords="139,185,257,244" shape="rect">
+    <area title="Shelled Prawns" onclick="loadTopFrame(this.id)" id="1003" coords="275,185,391,243" shape="rect">
+    <area title="Tub Ice Cream" coords="409,185,525,244" shape="rect">
+    <area title="500 Gram" onclick="loadTopFrame(this.id)" id="1000" coords="84,348,202,407" shape="rect">
+    <area title="1000 Gram" onclick="loadTopFrame(this.id)" id="1001" coords="216,348,333,407" shape="rect">
+    <area title="1 Litre" onclick="loadTopFrame(this.id)" id="1004" coords="356,348,473,407" shape="rect">
+    <area title="2 Litre" onclick="loadTopFrame(this.id)" id="1005" coords="488,348,604,407" shape="rect">
+  </map>
+
+  <map name="map2">
+    <area title="T-bone steak" onclick="loadTopFrame(this.id)" id="3002" coords="7,181,97,240" shape="rect">
+    <area title="Cheddar Cheese" coords="103,181,194,240" shape="rect">
+    <area title="Navel Oranges" onclick="loadTopFrame(this.id)" id="3003" coords="199,182,290,240" shape="rect">
+    <area title="Bananas" onclick="loadTopFrame(this.id)" id="3004" coords="299,182,389,239" shape="rect">
+    <area title="Grapes" onclick="loadTopFrame(this.id)" id="3006" coords="394,181,485,240" shape="rect">
+    <area title="Apples" onclick="loadTopFrame(this.id)" id="3007" coords="493,182,583,241" shape="rect">
+    <area title="Peaches" onclick="loadTopFrame(this.id)" id="3005" coords="590,181,680,241" shape="rect">
+    <area title="500 Gram" onclick="loadTopFrame(this.id)" id="3000" coords="47,349,164,407" shape="rect">
+    <area title="1000 Gram" onclick="loadTopFrame(this.id)" id="3001" coords="179,349,295,408" shape="rect">
+  </map>
+
+  <map name="map3">
+    <area title="Coffee" coords="63,190,181,250" shape="rect">
+    <area title="Earl Grey" coords="314,190,431,250" shape="rect">
+    <area title="Chocolate" onclick="loadTopFrame(this.id)" id="4005" coords="551,190,668,249" shape="rect">
+    <area title="200 gram" onclick="loadTopFrame(this.id)" id="4003" coords="28,341,119,398" shape="rect">
+    <area title="500 gram" onclick="loadTopFrame(this.id)" id="4004" coords="126,341,216,399" shape="rect">
+    <area title="Pack 25" onclick="loadTopFrame(this.id)" id="4000" coords="223,341,314,399" shape="rect">
+    <area title="Pack 100" onclick="loadTopFrame(this.id)" id="4001" coords="321,341,411,399" shape="rect">
+    <area title="Pack 200" onclick="loadTopFrame(this.id)" id="4002" coords="419,341,510,398" shape="rect">
+  </map>
+
+  <map name="map4">
+    <area title="Bath Soap" onclick="loadTopFrame(this.id)" id="2002" coords="8,182,125,241" shape="rect">
+    <area title="Panadol" coords="145,182,262,240" shape="rect">
+    <area title="Washing Powder" onclick="loadTopFrame(this.id)" id="2005" coords="275,182,392,240" shape="rect">
+    <area title="Garbage Bags" coords="411,181,527,240" shape="rect">
+    <area title="Laundry Bleach" onclick="loadTopFrame(this.id)" id="2006" coords="545,182,661,241" shape="rect">
+    <area title="Pack 24" onclick="loadTopFrame(this.id)" id="2000" coords="87,347,203,406" shape="rect">
+    <area title="Bottle 50" onclick="loadTopFrame(this.id)" id="2001" coords="216,347,334,406" shape="rect">
+    <area title="small" onclick="loadTopFrame(this.id)" id="2003" coords="357,347,473,405" shape="rect">
+    <area title="large" onclick="loadTopFrame(this.id)" id="2004" coords="487,347,603,406" shape="rect">
+  </map>
+
+  <map name="map5">
+    <area title="Bird Food" onclick="loadTopFrame(this.id)" id="5002" coords="143,182,260,240" shape="rect">
+    <area title="Cat Food" onclick="loadTopFrame(this.id)" id="5003" coords="276,182,394,241" shape="rect">
+    <area title="Dog Food" coords="409,182,526,240" shape="rect">
+    <area title="Fish Food" onclick="loadTopFrame(this.id)" id="5004" coords="546,182,663,240" shape="rect">
+    <area title="1kg Pack" onclick="loadTopFrame(this.id)" id="5001" coords="351,347,468,404" shape="rect">
+    <area title="5kg Pack" onclick="loadTopFrame(this.id)" id="5000" coords="488,347,605,406" shape="rect">
+  </map>
+
+
+  <script type="text/javascript">
+    // Funtion to change placeholder image source dependant on id
+    function showPic(area) {
+      const subCat = area.getAttribute('id');
+      const placeholder = document.getElementById('placeholder');
+      if (subCat === 'FrozenFood') {
+        placeholder.src = 'images/image1.png';
+        document.getElementById('placeholder').useMap = '#map1';
+      } else if (subCat === 'FreshFood') {
+        placeholder.src = 'images/image2.png';
+        document.getElementById('placeholder').useMap = '#map2';
+      } else if (subCat === 'Beverages') {
+        placeholder.src = 'images/image3.png';
+        document.getElementById('placeholder').useMap = '#map3';
+      } else if (subCat === 'HomeHealth') {
+        placeholder.src = 'images/image4.png';
+        document.getElementById('placeholder').useMap = '#map4';
+      } else if (subCat === 'PetFood') {
+        placeholder.src = 'images/image5.png';
+        document.getElementById('placeholder').useMap = '#map5';
+      }
+    }
+
+    // Passes through correct id with mouseover event for the categories
+    const frozenFood = document.getElementById('FrozenFood');
+    frozenFood.addEventListener('mouseover', () => {
+      showPic(frozenFood);
+    });
+
+    const freshFood = document.getElementById('FreshFood');
+    freshFood.addEventListener('mouseover', () => {
+      showPic(freshFood);
+    });
+
+    const beverages = document.getElementById('Beverages');
+    beverages.addEventListener('mouseover', () => {
+      showPic(beverages);
+    });
+
+    const homeHealth = document.getElementById('HomeHealth');
+    homeHealth.addEventListener('mouseover', () => {
+      showPic(homeHealth);
+    });
+
+    const petFood = document.getElementById('PetFood');
+    petFood.addEventListener('mouseover', () => {
+      showPic(petFood);
+    });
+
+    // Loads content from database to top table via php script using AJAX
+    function loadTopFrame(str) {
+      const xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function firstRequest() {
+        if (this.readyState === 4 && this.status === 200) {
+          document.getElementById('TopFrame').innerHTML = this.responseText;
+        }
+      };
+
+      xhttp.open('GET', `http://localhost/server/loadDetails.php?q=${str}`, true);
+      xhttp.send();
+
+      // Make the add to cart button have the items id as its value
+      document.getElementById('AddItem').value = str;
+    }
+
+    // JQuery calculate total in shopping cart
+    function calculateTotal() {
+      $(document).ready(() => {
+        let num = 0;
+        $('.CartPrice').each(function getFloat() {
+          num += parseFloat($(this).text()) / 2;
+        });
+        const totalValue = num.toFixed(2);
+        document.getElementById('Total').innerHTML = `$${totalValue}`;
+        document.getElementById('TotalCheck').innerHTML = `$${totalValue}`;
+      });
+    }
+
+    // Gets the number of rows in the item tables and displays No. of items
+    function numberItems() {
+      const itemRows = document.getElementById('CartTable').rows.length;
+      $('#ItemsCart').html(itemRows - 1);
+      $('#ItemsCheck').html(itemRows - 1);
+    }
+
+    // Add items to cart bottom frame AJAX
+    function addToCart(str) {
+      const xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function secondRequest() {
+        if (this.readyState === 4 && this.status === 200) {
+          const priceAdded = this.responseText;
+          document.getElementById('CartProduct').insertAdjacentHTML('afterend', priceAdded);
+          document.getElementById('CheckoutTable').insertAdjacentHTML('afterend', priceAdded);
+          calculateTotal();
+          numberItems();
+
+          // Clears the cart empty message
+          document.getElementById('CartEmpty').innerHTML = '';
+        }
+      };
+      xhttp.open('GET', `http://localhost/server/loadCart.php?q=${str}`, true);
+      xhttp.send();
+    }
+
+    // JQuery to clear the cart rows on Clear Cart button click
+    $('#ClearCart').click(() => {
+      $('.CartRow').remove();
+    });
+/*
+    function clearSession() {
+      document.location = 'http://localhost/server/clearSession.php';
+    }
+
+    document.getElementById('ClearCart').addEventListener('click', clearSession());
+*/
+
+    // Clear cart price total
+    function clearTotal() {
+      document.getElementById('Total').innerHTML = '';
+      document.getElementById('TotalCheck').innerHTML = '';
+      $('#ItemsCart').html('');
+      $('#ItemsCheck').html('');
+    }
+
+    // Open and close Checkout form
+    function openForm() {
+      document.getElementById('form-div').style.display = 'flex';
+    }
+    // Close function, no window display by default. Clears error messages on close
+    function closeForm() {
+      document.getElementById('form-div').style.display = 'none';
+      document.getElementById('error-text').innerHTML = '';
+    }
+
+    // Check if there are any items in the cart
+    function checkCart() {
+      const cartRows = document.getElementById('CartTable').rows.length;
+      if (cartRows < 2) {
+        document.getElementById('CartEmpty').innerHTML = '* Please add items to your cart before checkout.';
+      } else {
+        openForm();
+      }
+    }
+
+    // Close the thank you div
+    function closeThankYou() {
+      document.getElementById('thankyou').style.display = 'none';
+      document.getElementById('form-div').style.display = 'none';
+      document.getElementById('error-text').innerHTML = '';
+    }
+
+    // Validates form, returns error message if missing info
+    function validateForm() {
+      if (document.getElementById('name').value === '') {
+        document.getElementById('error-text').innerHTML = '* Please enter your Name';
+        document.getElementById('thankyou').style.display = 'none';
+        return false;
+      }
+      if (document.getElementById('address').value === '') {
+        document.getElementById('error-text').innerHTML = '* Please enter your Address';
+        document.getElementById('thankyou').style.display = 'none';
+        return false;
+      }
+      if (document.getElementById('suburb').value === '') {
+        document.getElementById('error-text').innerHTML = '* Please enter your Suburb';
+        document.getElementById('thankyou').style.display = 'none';
+        return false;
+      }
+      if (document.getElementById('state').value === '') {
+        document.getElementById('error-text').innerHTML = '* Please enter your State';
+        document.getElementById('thankyou').style.display = 'none';
+        return false;
+      }
+      if (document.getElementById('country').value === '') {
+        document.getElementById('error-text').innerHTML = '* Please enter your Country';
+        document.getElementById('thankyou').style.display = 'none';
+        return false;
+      }
+      if (document.getElementById('email').value === '') {
+        document.getElementById('error-text').innerHTML = '* Please enter your Email';
+        document.getElementById('thankyou').style.display = 'none';
+        return false;
+      }
+      document.getElementById('error-text').innerHTML = '';
+
+      // Gets the customers name from the form and displays a thank you message in a new window
+      const name = document.getElementById('name').value;
+      document.getElementById('thankyou-text').innerHTML = `${name},<br>thank you for your purchase!`;
+      document.getElementById('thankyou').style.display = 'block';
+      return true;
+    }
+  </script>
+</body>
+</html>
+<!--
+Photo credits to:
+Jess Bailey on Unsplash https://unsplash.com/photos/0uns8eQn_g8
+Debby Hudson on Unsplash https://unsplash.com/photos/lJONenH-1B8
+Felipe Paes on Pexels https://www.pexels.com/photo/photo-of-push-cart-against-yellow-background-3728311/
+Deon Black on Unsplash https://unsplash.com/photos/2evdP8ysNoU
+All photos are deemed free for use. Some photos have been modified.
+-->

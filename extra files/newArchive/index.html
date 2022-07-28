@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <script src="libraries/p5.js"></script>
+  <script src="libraries/p5.sound.js"></script>
+  <script src="libraries/p5.dom.js"></script>
+</head>
+
+<body>
+  <div class=div1 onclick="showCoords(event)">
+    <h1>Grocery Store</h1>
+    <p id="demo">Choose your items here!</p>
+    <img id="tier1" src="images/t1default.PNG" usemap ="#tier1" alt="categorytierone">
+    <br>
+    <img id="tier2" src="" alt="frozenfood" usemap="">
+
+  </div>
+  <div class="div2">
+    <h2>Details</h2>
+  </div>
+  <div class="div3">
+    <h2>Checkout</h2>
+    <p>
+      <form method="POST" action="purchaseform.php" target="_blank"> 
+        <input type= "submit" name="goButton" value ="Checkout">
+      </form>    
+    </p>
+  </div>
+
+  <map name="tier1">
+    <area shape="rect" coords="33,260,116,314" src ='images/t1c1.PNG'/>
+    <area shape="rect" coords="146,260,232,314" src ='images/t1c2.PNG'/>
+    <area shape="rect" coords="261,260,352,314" src='images/t1c3.PNG'>
+    <area shape="rect" coords="381,260,464,314"  src='images/t1c4.PNG'>
+    <area shape="rect" coords="495,260,587,314"  src='images/t1c5.PNG'>
+</map>
+
+  <!-- <map name="map1">
+    <area shape="rect" coords="33,260,116,314"  alt="FrozenFood">
+  </map>
+  <map name="map2">
+    <area shape="rect" coords="146,260,232,314"   alt="FreshFood">
+  </map>
+  <map name="map3">
+    <area shape="rect" coords="261,260,352,314"   alt="FrozenFood">
+  </map>
+  <map name="map4">
+    <area shape="rect" coords="381,260,464,314"   alt="FrozenFood">
+  </map>
+  <map name="map5">
+    <area shape="rect" coords="495,260,587,314"   alt="FrozenFood">
+  </map> -->
+  <script src="script.js"></script>
+
+</body>
+</html>
+
+<!-- <a href="https://www.w3schools.com" target="_blank" rel="noopener noreferrer">Visit W3Schools.com!</a>  -->

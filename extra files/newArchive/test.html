@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Document</title>
+
+    <style>
+        div {background: rgb(230, 211, 211) }
+
+    </style>
+</head>
+<body>
+    <div>
+        <!-- <p id= "watermelon"></p>
+        <button type="button" onclick="changeContent()">Change Content</button> -->
+        <!-- <ul>
+            <li id="milk" onmouseover="showPics(this)">Milk</li>
+            <li id="sugar" onmouseover="showPics(this)">Sugar</li>
+        </ul> -->
+        <!-- onmouseover="showPic(this)" -->
+        <img class="img0" id="placeholder" src="images/t1default.PNG" usemap="#tier1">
+        <img id="placeholder2" src="">
+        <map name="tier1">
+            <area id="frozenfood" target="" alt="frozenfood" title="frozenfood" coords="10,132,95,176" shape="rect">
+            <area id="freshfood" target="" alt="freshfood" title="freshfood" href="" coords="127,131,203,175" shape="rect">
+            <area id="beverages" target="" alt="beverages" title="beverages" href="" coords="238,129,328,176" shape="rect">
+            <area id="homehealth "target="" alt="homehealth" title="homehealth" href="" coords="359,127,445,176" shape="rect">
+            <area id="petfood" target="" alt="petfood" title="petfood" href="" coords="472,126,562,174" shape="rect">
+        </map>
+
+        <map name="c1">
+
+        </map>
+    </div>
+
+    <script type="text/javascript">
+        // function changeContent() {
+        //     var xhttp = new XMLHttpRequest();
+        //     xhttp.onreadystatechange = function() {
+        //         document.getElementById("watermelon").innerHTML = xhttp.responseText;
+        //     };
+        //     xhttp.open("GET", "content.txt");
+        //     xhttp.send();
+        // }
+
+        // function showPics (li) {
+        //     var shopping_item = li.getAttribute("id"); //get the id fromthe li. Id can be many things
+        //     var placeholdereg=document.getElementById("placeholdereg"); //the word "placeholder" makes changes to whatever element contains the word
+        //     if (shopping_item == "milk") {
+        //         placeholdereg.src = "images/t1c1.PNG";
+        //     } else if (shopping_item == "sugar") {
+        //         placeholdereg.src = "images/t1c2.PNG";
+        //     }
+        // }
+        function showPic (area) {
+            var tier1 = area.getAttribute("id"); //get the id fromthe li. Id can be many things
+            var placeholder=document.getElementById("placeholder"); //the word "placeholder" makes changes to whatever element contains the word
+            if (tier1 == "frozenfood") {
+                placeholder.src = "images/t1c1.PNG";
+            } else if (tier1 == "freshfood") {
+                placeholder.src = "images/t1c2.PNG";
+            } else if (tier1 == "beverages") {
+                placeholder.src = "images/t1c3.PNG";
+            } else if (tier1 == "homehealth") {
+                placeholder.src = "images/t1c4.PNG";
+            } else if (tier1 == "petfood") {
+                placeholder.src = "images/t1c5.PNG";
+            }
+        }
+        const frozenfood = document.getElementById("frozenfood");
+        frozenfood.addEventListener('mouseover', function(){
+            showPic (frozenfood);
+        });
+
+
+    </script>
+
+
+</body>
+</html>
