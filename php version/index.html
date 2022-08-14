@@ -3,7 +3,8 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <link rel="stylesheet" href="bluestyles.css">
+  <link rel="stylesheet" media="screen and (min-width: 720px)" href="bluestyles.css">
+  <link rel="stylesheet" media="screen and (max-width: 720px)" href="bluestylesmobile.css">
 </head>
 <body>
   <header class="MainHeader">The Giddy Grocery</header>
@@ -146,7 +147,7 @@
         </div>
 
         <!--Error message-->
-        <p id="CartEmpty"></p>
+        <p id="CartEmpty" style="position: relative; bottom: 5%;"></p>
         <br>
 
         <!--Total cart table-->

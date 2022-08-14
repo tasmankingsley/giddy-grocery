@@ -58,19 +58,11 @@ function loadIcon(str) {
   xhttp.onreadystatechange = function iconRequest() {
     if (this.readyState === 4 && this.status === 200) {
       const icon = document.getElementById('itemIcon');
-
-      let product_data = JSON.parse(this.responseText).data;
-
-      for (let i = 0; i < product_data.length; i++) {
-        if (product_data[i].product_id === str) {
-          icon.src = product_data[i].img_src;
-        }
-      }
-      
+      icon.src = this.responseText;
     }
   };
 
-  xhttp.open('GET', `products.json`, true);
+  xhttp.open('GET', `http://localhost/server/loadIcon.php?q=${str}`, true);
   xhttp.send();
 }
 
@@ -79,29 +71,11 @@ function loadTopFrame(str) {
   const xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function tableRequest() {
     if (this.readyState === 4 && this.status === 200) {
-      let product_data = JSON.parse(this.responseText).data;
-
-      for (let i = 0; i < product_data.length; i++) {
-        if (product_data[i].product_id === str) {
-
-          document.getElementById('TopFrame').innerHTML = `
-          <tr>
-            <td>${product_data[i].product_name}</td>
-            <td>$${product_data[i].unit_price}</td>
-            <td>${product_data[i].unit_quantity}</td>
-            <td>${product_data[i].in_stock}</td>
-            <td>${product_data[i].product_id}</td>
-            <td>
-              <input type=\"number\" min=\"1\" max=\"20\" value=\"1\" id=\"amountVal\" style=\"width: 60px;\"
-              oninput=\"this.value = Math.round(this.value);\">
-            </td>
-          </tr>`
-        }
-      }
+      document.getElementById('TopFrame').innerHTML = this.responseText;
     }
   };
 
-  xhttp.open('GET', `products.json`, true);
+  xhttp.open('GET', `http://localhost/server/loadDetails.php?q=${str}`, true);
   xhttp.send();
   // Make the add to cart button have the items id as its value
   document.getElementById('AddItem').value = str;
@@ -145,22 +119,7 @@ function addToCart(str) {
     // Second request AJAX function
     xhttp.onreadystatechange = function secondRequest() {
       if (this.readyState === 4 && this.status === 200) {
-        let added;
-
-        let product_data = JSON.parse(this.responseText).data;
-
-        for (let i = 0; i < product_data.length; i++) {
-          if (product_data[i].product_id === str) {
-
-            added = `
-            <tr id=\"ID${str}\" class=\"CartRow\">
-              <td class=\"ProductName\">${product_data[i].product_name}</td>
-              <td class=\"ProductPrice\" id=\"UP${str}\">${product_data[i].unit_price}</td>
-              <td class=\"CartAmount\" id=\"AM${str}\"></td>
-              <td class=\"CartPrice\" id=\"TP${str}\">${product_data[i].unit_price}</td>
-            </tr>`
-          }
-        }
+        const added = this.responseText;
 
         // If ID element (item row in cart) is present, update values
         // Else add a new item row and update values
@@ -191,7 +150,7 @@ function addToCart(str) {
         document.getElementById('CartEmpty').innerHTML = '';
       }
     };
-    xhttp.open('GET', `products.json`, true);
+    xhttp.open('GET', `http://localhost/server/loadCart.php?q=${str}`, true);
     xhttp.send();
   } else {
     alert('Please enter a value between 1 and 20');
